@@ -17,10 +17,10 @@ const TaskList = ({ data }) => {
   };
 
   return (
-    <div className='p-6 shadow-xl rounded-lg w-unit-8xl max-w-full'>
+    <div className='p-6 shadow-xl rounded-lg w-unit-8xl max-w-full bg-slate-700 '>
       <div className='flex flex-col gap-6'>
         <h4 className='text-center font-bold text-xl text-gray-700'>
-          Next 13 Todo App
+           Todo App
         </h4>
         <TaskAdd onTaskAdded={onTaskAdded} />
         <div className='flex flex-col'>

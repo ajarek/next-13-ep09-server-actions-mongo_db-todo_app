@@ -6,7 +6,7 @@ import { Input } from '@nextui-org/input';
 import React, { useState } from 'react';
 import { CiCirclePlus } from "react-icons/ci";
 
-const TaskAdd = () => {
+const TaskAdd = ({ onTaskAdded }) => {
   const [isSubmiting, setIsSubmiting] = useState(false);
   const [title, setTitle] = useState("");
 
@@ -21,7 +21,7 @@ const TaskAdd = () => {
 
       const res = await addTaskAction({ title });
 
-      // onTaskAdded(res.newTask);
+      onTaskAdded(res.newTask);
 
       setIsSubmiting(false);
       setTitle("");
@@ -29,9 +29,9 @@ const TaskAdd = () => {
       alert(err.message);
     }
   };
-
+  
   return (
-    <form onSubmit={addTask} className='flex gap-2 '>
+    <form onSubmit={addTask} className='flex gap-2  '>
       <Input
         placeholder='Enter your task here'
         isDisabled={isSubmiting}

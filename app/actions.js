@@ -39,3 +39,20 @@ export const deleteTaskAction = async ({ id }) => {
     throw err;
   }
 };
+export const updateTaskStatusAction = async ({ id, newStatus }) => {
+  try {
+    await MongooseClient();
+
+    const task = await Task.findById(id);
+
+    if (!task) throw new Error("Task not found");
+
+    task.completed = newStatus;
+
+    await task.save();
+
+    return { success: true };
+  } catch (err) {
+    throw err;
+  }
+};

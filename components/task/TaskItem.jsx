@@ -5,7 +5,7 @@ import { Checkbox } from '@nextui-org/checkbox';
 import { Divider } from '@nextui-org/divider';
 import React, { useState } from 'react';
 import { CiTrash } from "react-icons/ci";
-import { deleteTaskAction } from '@/app/actions';
+import { deleteTaskAction,  updateTaskStatusAction } from '@/app/actions';
 const TaskItem = ({data, onTaskDeleted} ) => {
   const [task, setTask] = useState(data);
   const [isDeleting, setIsDeleting] = useState(false);
@@ -21,6 +21,20 @@ const TaskItem = ({data, onTaskDeleted} ) => {
       alert(err.message);
     }
   };
+  
+  const onUpdateStatus = async (newValue) => {
+    setTask({ ...task, completed: newValue });
+
+    try {
+      await updateTaskStatusAction({
+        id: task._id,
+        newStatus: newValue
+      });
+    } catch (err) {
+      alert(err.message);
+      setTask({ ...task, completed: !newValue });
+    }
+  };
 
   return (
     <>
@@ -28,10 +42,10 @@ const TaskItem = ({data, onTaskDeleted} ) => {
         <Checkbox
           isSelected={task.completed}
           isDisabled={isDeleting}
-          onValueChange={(e)=>console.log(e)}
+          onValueChange={onUpdateStatus}
         />
         <div className="flex items-center grow">
-          <h5 className={`${task.completed ? "line-through text-gray-300" : "text-gray-700"}`}>
+          <h5 className={`${task.completed ? "line-through text-gray-400" : "text-gray-100"}`}>
             {task.title}
           </h5>
         </div>
