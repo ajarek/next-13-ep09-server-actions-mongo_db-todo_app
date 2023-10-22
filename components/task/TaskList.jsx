@@ -1,37 +1,41 @@
-"use client";
+'use client'
 
-import React, { useState } from 'react';
-import TaskAdd from './TaskAdd';
-import { Divider } from '@nextui-org/divider';
-import TaskItem from './TaskItem';
+import React, { useState } from 'react'
+import TaskAdd from './TaskAdd'
+import { Divider } from '@nextui-org/divider'
+import TaskItem from './TaskItem'
 
 const TaskList = ({ data }) => {
-  const [tasks, setTasks] = useState(data);
+  const [tasks, setTasks] = useState(data)
 
   const onTaskAdded = (newTask) => {
-    setTasks([newTask, ...tasks]);
-  };
+    setTasks([newTask, ...tasks])
+  }
 
   const onTaskDeleted = (task) => {
-    setTasks(tasks.filter(e => e._id !== task._id));
-  };
+    setTasks(tasks.filter((e) => e._id !== task._id))
+  }
 
   return (
     <div className='p-6 shadow-xl rounded-lg w-unit-8xl max-w-full bg-slate-700 '>
       <div className='flex flex-col gap-6'>
         <h4 className='text-center font-bold text-xl text-gray-700'>
-           Todo App
+          Todo App
         </h4>
         <TaskAdd onTaskAdded={onTaskAdded} />
         <div className='flex flex-col'>
           <Divider className='bg-gray-100' />
-          {tasks.map(task => (
-            <TaskItem data={task} key={task._id} onTaskDeleted={onTaskDeleted} />
+          {tasks.map((task) => (
+            <TaskItem
+              data={task}
+              key={task._id}
+              onTaskDeleted={onTaskDeleted}
+            />
           ))}
         </div>
       </div>
     </div>
-  );
-};
+  )
+}
 
-export default TaskList;
+export default TaskList

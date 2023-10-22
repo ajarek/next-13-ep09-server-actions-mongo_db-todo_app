@@ -1,40 +1,40 @@
-"use client";
+'use client'
 
-import { Button } from '@nextui-org/button';
-import { Checkbox } from '@nextui-org/checkbox';
-import { Divider } from '@nextui-org/divider';
-import React, { useState } from 'react';
-import { CiTrash } from "react-icons/ci";
-import { deleteTaskAction,  updateTaskStatusAction } from '@/app/actions';
-const TaskItem = ({data, onTaskDeleted} ) => {
-  const [task, setTask] = useState(data);
-  const [isDeleting, setIsDeleting] = useState(false);
+import { Button } from '@nextui-org/button'
+import { Checkbox } from '@nextui-org/checkbox'
+import { Divider } from '@nextui-org/divider'
+import React, { useState } from 'react'
+import { CiTrash } from 'react-icons/ci'
+import { deleteTaskAction, updateTaskStatusAction } from '@/app/actions'
+const TaskItem = ({ data, onTaskDeleted }) => {
+  const [task, setTask] = useState(data)
+  const [isDeleting, setIsDeleting] = useState(false)
 
   const onDeleteTask = async () => {
-    if (isDeleting) return;
-    setIsDeleting(true);
+    if (isDeleting) return
+    setIsDeleting(true)
 
     try {
-      await deleteTaskAction({ id: task._id });
-      onTaskDeleted(task);
+      await deleteTaskAction({ id: task._id })
+      onTaskDeleted(task)
     } catch (err) {
-      alert(err.message);
+      alert(err.message)
     }
-  };
-  
+  }
+
   const onUpdateStatus = async (newValue) => {
-    setTask({ ...task, completed: newValue });
+    setTask({ ...task, completed: newValue })
 
     try {
       await updateTaskStatusAction({
         id: task._id,
-        newStatus: newValue
-      });
+        newStatus: newValue,
+      })
     } catch (err) {
-      alert(err.message);
-      setTask({ ...task, completed: !newValue });
+      alert(err.message)
+      setTask({ ...task, completed: !newValue })
     }
-  };
+  }
 
   return (
     <>
@@ -44,8 +44,12 @@ const TaskItem = ({data, onTaskDeleted} ) => {
           isDisabled={isDeleting}
           onValueChange={onUpdateStatus}
         />
-        <div className="flex items-center grow">
-          <h5 className={`${task.completed ? "line-through text-gray-400" : "text-gray-100"}`}>
+        <div className='flex items-center grow'>
+          <h5
+            className={`${
+              task.completed ? 'line-through text-gray-400' : 'text-gray-100'
+            }`}
+          >
             {task.title}
           </h5>
         </div>
@@ -56,7 +60,7 @@ const TaskItem = ({data, onTaskDeleted} ) => {
           isLoading={isDeleting}
           onClick={onDeleteTask}
         >
-          {!isDeleting && <CiTrash size="1.5em" />}
+          {!isDeleting && <CiTrash size='1.5em' />}
         </Button>
       </div>
       <Divider className='bg-gray-100' />

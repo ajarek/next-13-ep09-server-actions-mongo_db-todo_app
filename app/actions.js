@@ -1,58 +1,58 @@
-"use server";
+'use server'
 
-import { MongooseClient } from "@/libs/mongoose.lib";
-import Task from "@/models/task.model";
+import { MongooseClient } from '@/libs/mongoose.lib'
+import Task from '@/models/task.model'
 
 export const addTaskAction = async ({ title }) => {
   try {
-    await MongooseClient();
+    await MongooseClient()
 
-    const newTask = await Task.create({ title });
+    const newTask = await Task.create({ title })
 
     return {
-      newTask: JSON.parse(JSON.stringify(newTask))
-    };
+      newTask: JSON.parse(JSON.stringify(newTask)),
+    }
   } catch (err) {
-    throw err;
+    throw err
   }
-};
+}
 
 export const getTaskAction = async () => {
   try {
-    await MongooseClient();
+    await MongooseClient()
 
-    const tasks = await Task.find().sort("-created");
+    const tasks = await Task.find().sort('-created')
 
-    return JSON.parse(JSON.stringify(tasks));
+    return JSON.parse(JSON.stringify(tasks))
   } catch (err) {
-    throw err;
+    throw err
   }
-};
+}
 export const deleteTaskAction = async ({ id }) => {
   try {
-    await MongooseClient();
+    await MongooseClient()
 
-    await Task.findOneAndDelete(id);
+    await Task.findOneAndDelete(id)
 
-    return { success: true };
+    return { success: true }
   } catch (err) {
-    throw err;
+    throw err
   }
-};
+}
 export const updateTaskStatusAction = async ({ id, newStatus }) => {
   try {
-    await MongooseClient();
+    await MongooseClient()
 
-    const task = await Task.findById(id);
+    const task = await Task.findById(id)
 
-    if (!task) throw new Error("Task not found");
+    if (!task) throw new Error('Task not found')
 
-    task.completed = newStatus;
+    task.completed = newStatus
 
-    await task.save();
+    await task.save()
 
-    return { success: true };
+    return { success: true }
   } catch (err) {
-    throw err;
+    throw err
   }
-};
+}
